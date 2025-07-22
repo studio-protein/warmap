@@ -1,0 +1,94 @@
+body {
+  margin: 0;
+  background-color: #fefaf6;
+  font-family: "Montserrat", sans-serif;
+}
+
+.app {
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+.title {
+  font-family: "Comfortaa", sans-serif;
+  font-size: 2.2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+button, select {
+  font-family: "Josefin Sans", sans-serif;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+button:hover, select:hover {
+  background-color: #f0f0f0;
+}
+
+button.active {
+  background-color: #fbcfe8;
+  border: 2px solid #444;
+}
+
+#map-wrapper {
+  overflow: hidden;
+  touch-action: none;
+  display: flex;
+  justify-content: center;
+}
+
+.grid-map {
+  display: grid;
+  transform-origin: top left;
+  transition: transform 0.2s ease-in-out;
+}
+
+.grid-tile {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #ddd;
+  font-size: 10px;
+  color: #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  background-color: white;
+  text-align: center;
+  line-height: normal;
+  padding: 2px;
+}
+
+/* Color classes */
+.bg-empty { background-color: white; }
+.bg-green-300 { background-color: #86efac; }
+.bg-pink-400 { background-color: #f472b6; }
+.bg-purple-500 { background-color: #a855f7; }
+.bg-indigo-400 { background-color: #818cf8; }
+.bg-yellow-400 { background-color: #facc15; }
+.bg-blue-500 { background-color: #3b82f6; }
+.bg-orange-400 { background-color: #fb923c; }
+.bg-red-500 { background-color: #ef4444; }
+.bg-lime-400 { background-color: #a3e635; }
+.bg-cyan-400 { background-color: #22d3ee; }
+.bg-fuchsia-500 { background-color: #d946ef; }
+.bg-violet-600 { background-color: #7c3aed; }
+.bg-amber-500 { background-color: #f59e0b; }
+.bg-gray-400 { background-color: #9ca3af; } /* For Bear 1 */
+.bg-gray-500 { background-color: #6b7280; } /* For Bear 2 */
