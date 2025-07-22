@@ -2,35 +2,82 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>2801 WAR Map Planner</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Google Fonts & html2canvas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"/>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <!-- Inline CSS -->
+  <style>
+    body { margin:0; background:#fefaf6; font-family:"Montserrat",sans-serif }
+    .app { padding:2rem; min-height:100vh }
+    .title { font-family:"Comfortaa",sans-serif; font-size:2.2rem; text-align:center; margin-bottom:1.5rem; color:#333 }
+    .toolbar { display:flex; flex-wrap:wrap; gap:.5rem; justify-content:center; margin-bottom:1.5rem }
+    button, select {
+      font-family:"Josefin Sans",sans-serif;
+      padding:8px 14px; border-radius:8px; border:1px solid #ccc;
+      background:#fff; cursor:pointer; font-weight:500; font-size:14px;
+      transition:all .2s
+    }
+    button:hover, select:hover { background:#f0f0f0 }
+    button.active { background:#fbcfe8; border:2px solid #444 }
+    #map-wrapper { overflow:hidden; touch-action:none; display:flex; justify-content:center }
+    .grid-map {
+      display:grid; transform-origin:top left;
+      transition:transform .2s ease-in-out
+    }
+    .grid-tile {
+      width:40px; height:40px; border:1px solid #ddd;
+      font-size:10px; color:#222; display:flex;
+      align-items:center; justify-content:center;
+      font-weight:600; background:#fff;
+      text-align:center; padding:2px
+    }
+
+    /* color classes */
+    .bg-empty{background:#fff}
+    .bg-green-300{background:#86efac}
+    .bg-pink-400{background:#f472b6}
+    .bg-purple-500{background:#a855f7}
+    .bg-indigo-400{background:#818cf8}
+    .bg-yellow-400{background:#facc15}
+    .bg-blue-500{background:#3b82f6}
+    .bg-orange-400{background:#fb923c}
+    .bg-red-500{background:#ef4444}
+    .bg-lime-400{background:#a3e635}
+    .bg-cyan-400{background:#22d3ee}
+    .bg-fuchsia-500{background:#d946ef}
+    .bg-violet-600{background:#7c3aed}
+    .bg-amber-500{background:#f59e0b}
+    .bg-gray-400{background:#9ca3af}
+    .bg-gray-500{background:#6b7280}
+  </style>
 </head>
+
 <body>
   <div class="app">
-    <h1 class="title comfortaa">2801 WAR Map Planner</h1>
+    <h1 class="title">2801 WAR Map Planner</h1>
 
     <div class="toolbar" id="controls">
       <select id="colorPicker">
-        <option value="bg-green-300" style="background-color:#86efac;">Green</option>
-        <option value="bg-pink-400" style="background-color:#f472b6;">Pink</option>
-        <option value="bg-purple-500" style="background-color:#a855f7;">Purple</option>
-        <option value="bg-indigo-400" style="background-color:#818cf8;">Indigo</option>
-        <option value="bg-yellow-400" style="background-color:#facc15;">Yellow</option>
-        <option value="bg-blue-500" style="background-color:#3b82f6;">Blue</option>
-        <option value="bg-orange-400" style="background-color:#fb923c;">Orange</option>
-        <option value="bg-red-500" style="background-color:#ef4444;">Red</option>
-        <option value="bg-lime-400" style="background-color:#a3e635;">Lime</option>
-        <option value="bg-cyan-400" style="background-color:#22d3ee;">Cyan</option>
-        <option value="bg-fuchsia-500" style="background-color:#d946ef;">Fuchsia</option>
-        <option value="bg-violet-600" style="background-color:#7c3aed;">Violet</option>
-        <option value="bg-amber-500" style="background-color:#f59e0b;">Amber</option>
+        <option value="bg-green-300" style="background-color:#86efac">Green</option>
+        <option value="bg-pink-400"  style="background-color:#f472b6">Pink</option>
+        <option value="bg-purple-500" style="background-color:#a855f7">Purple</option>
+        <option value="bg-indigo-400" style="background-color:#818cf8">Indigo</option>
+        <option value="bg-yellow-400" style="background-color:#facc15">Yellow</option>
+        <option value="bg-blue-500"  style="background-color:#3b82f6">Blue</option>
+        <option value="bg-orange-400"style="background-color:#fb923c">Orange</option>
+        <option value="bg-red-500"   style="background-color:#ef4444">Red</option>
+        <option value="bg-lime-400"  style="background-color:#a3e635">Lime</option>
+        <option value="bg-cyan-400"  style="background-color:#22d3ee">Cyan</option>
+        <option value="bg-fuchsia-500"style="background-color:#d946ef">Fuchsia</option>
+        <option value="bg-violet-600"style="background-color:#7c3aed">Violet</option>
+        <option value="bg-amber-500" style="background-color:#f59e0b">Amber</option>
       </select>
-
       <button id="zoomIn">Zoom In</button>
       <button id="zoomOut">Zoom Out</button>
       <button id="toggleView">Toggle View</button>
@@ -41,6 +88,179 @@
       <div id="map" class="grid-map"></div>
     </div>
   </div>
-  <script src="script.js"></script>
+
+  <!-- Inline JS -->
+  <script>
+    const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbyjPxTFyXWY7Tdk_dSYGoTs8DypMVvxY9WzYT_OTBQyC4o4vujx47y_NJejMBq3wTwriQ/exec";
+
+    const TILE_TYPES = {
+      EMPTY:"", BEAR1:"BEAR 1", BEAR2:"BEAR 2",
+      HQ:"Alliance HQ", BANNER:"Banner", CITY:"City"
+    };
+    const TILE_COLORS = {
+      "BEAR 1":"bg-gray-400","BEAR 2":"bg-gray-500",
+      "Alliance HQ":"bg-yellow-400","Banner":"bg-blue-500"
+    };
+    const TILE_SIZES = { "BEAR 1":3,"BEAR 2":3,"Alliance HQ":3,"Banner":1,"City":2 };
+
+    let mapWidth=20, mapHeight=20, map=[], cityLabels={}, cityColors={},
+        selectedType=TILE_TYPES.CITY, selectedCityColor="bg-green-300",
+        zoom=1, isPerspective=false, offset={x:0,y:0},
+        dragging=false, dragStart={x:0,y:0};
+
+    const mapDiv = document.getElementById("map");
+    const colorPicker = document.getElementById("colorPicker");
+
+    function autoSave(){
+      fetch(GOOGLE_SHEET_URL,{
+        method:"POST",
+        body:JSON.stringify({
+          action:"save",
+          data:{map,cityLabels,cityColors,mapWidth,mapHeight}
+        })
+      });
+    }
+
+    function initMap(){
+      fetch(GOOGLE_SHEET_URL+"?action=load")
+        .then(r=>r.json())
+        .then(res=>{
+          map = res.map || Array.from({length:mapHeight},()=>Array(mapWidth).fill(null));
+          mapWidth = res.mapWidth||20; mapHeight=res.mapHeight||20;
+          cityLabels=res.cityLabels||{}; cityColors=res.cityColors||{};
+          renderMap();
+        })
+        .catch(_=>{
+          map = Array.from({length:mapHeight},()=>Array(mapWidth).fill(null));
+          renderMap();
+        });
+    }
+
+    function renderMap(){
+      mapDiv.innerHTML = "";
+      mapDiv.style.gridTemplateColumns = `repeat(${mapWidth},40px)`;
+      mapDiv.style.gridTemplateRows    = `repeat(${mapHeight},40px)`;
+      mapDiv.style.transform = isPerspective
+        ? `perspective(800px) rotateX(45deg) rotateZ(45deg) scale(${zoom}) translate(${offset.x}px,${offset.y}px)`
+        : `scale(${zoom}) translate(${offset.x}px,${offset.y}px)`;
+
+      for(let y=0;y<mapHeight;y++){
+        for(let x=0;x<mapWidth;x++){
+          const cell = map[y][x];
+          const key = x+"-"+y;
+          const tile = document.createElement("div");
+          const colorClass = cell===TILE_TYPES.CITY
+            ? cityColors[key] : TILE_COLORS[cell]||"bg-empty";
+          tile.className = "grid-tile "+colorClass;
+          tile.textContent = cell===TILE_TYPES.CITY
+            ? (cityLabels[key]||"") : cell||"";
+          tile.onclick = ()=>{
+            if(cell) clearTile(x,y);
+            else placeTile(x,y);
+          };
+          mapDiv.appendChild(tile);
+        }
+      }
+    }
+
+    function placeTile(x,y){
+      const size = TILE_SIZES[selectedType]||1;
+      if(checkOverlap(x,y,size)) return;
+      const label = selectedType===TILE_TYPES.CITY ? prompt("City name:") : "";
+      for(let dy=0;dy<size;dy++){
+        for(let dx=0;dx<size;dx++){
+          map[y+dy][x+dx] = selectedType;
+          const key = (x+dx)+"-"+(y+dy);
+          if(selectedType===TILE_TYPES.CITY){
+            cityLabels[key] = label;
+            cityColors[key] = selectedCityColor;
+          }
+        }
+      }
+      renderMap();
+      autoSave();
+    }
+
+    function clearTile(x,y){
+      const type = map[y][x], size=TILE_SIZES[type]||1;
+      for(let dy=0;dy<size;dy++){
+        for(let dx=0;dx<size;dx++){
+          const key=(x+dx)+"-"+(y+dy);
+          if(map[y+dy]?.[x+dx]===type){
+            map[y+dy][x+dx]=null;
+            delete cityLabels[key]; delete cityColors[key];
+          }
+        }
+      }
+      renderMap();
+      autoSave();
+    }
+
+    function checkOverlap(x,y,size){
+      for(let dy=0;dy<size;dy++){
+        for(let dx=0;dx<size;dx++){
+          if(map[y+dy]?.[x+dx]) return true;
+        }
+      }
+      return false;
+    }
+
+    // Controls
+    document.getElementById("zoomIn").onclick    = ()=>{zoom+=.1; renderMap()};
+    document.getElementById("zoomOut").onclick   = ()=>{zoom=Math.max(.2,zoom-.1); renderMap()};
+    document.getElementById("toggleView").onclick= ()=>{isPerspective=!isPerspective; renderMap()};
+    document.getElementById("exportImage").onclick = ()=>{
+      html2canvas(mapDiv).then(canvas=>{
+        const a=document.createElement("a");
+        a.download="war-map.png";
+        a.href=canvas.toDataURL();
+        a.click();
+      });
+    };
+
+    colorPicker.onchange = e => selectedCityColor = e.target.value;
+
+    // Tile buttons
+    Object.values(TILE_TYPES).forEach(type=>{
+      const btn=document.createElement("button");
+      btn.textContent = type||"Eraser";
+      btn.onclick = ()=>{
+        selectedType=type;
+        document.querySelectorAll(".toolbar button").forEach(b=>b.classList.remove("active"));
+        btn.classList.add("active");
+      };
+      if(type===selectedType) btn.classList.add("active");
+      document.getElementById("controls").prepend(btn);
+    });
+
+    // Drag-to-pan
+    const wrapper = document.getElementById("map-wrapper");
+    wrapper.addEventListener("mousedown", e=>{
+      dragging=true;
+      dragStart={x:e.clientX-offset.x, y:e.clientY-offset.y};
+    });
+    document.addEventListener("mousemove", e=>{
+      if(!dragging) return;
+      offset={x:e.clientX-dragStart.x, y:e.clientY-dragStart.y};
+      renderMap();
+    });
+    document.addEventListener("mouseup", ()=>dragging=false);
+
+    // Touch support
+    wrapper.addEventListener("touchstart", e=>{
+      if(e.touches.length!==1) return;
+      dragging=true;
+      dragStart={x:e.touches[0].clientX-offset.x, y:e.touches[0].clientY-offset.y};
+    });
+    document.addEventListener("touchmove", e=>{
+      if(!dragging||e.touches.length!==1) return;
+      offset={x:e.touches[0].clientX-dragStart.x, y:e.touches[0].clientY-dragStart.y};
+      renderMap();
+    });
+    document.addEventListener("touchend", ()=>dragging=false);
+
+    // Initialize
+    initMap();
+  </script>
 </body>
 </html>
