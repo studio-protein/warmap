@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2801 WAR Map Planner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+  <div class="app">
+    <h1 class="title comfortaa">2801 WAR Map Planner</h1>
+
+    <div class="toolbar" id="controls">
+      <select id="colorPicker">
+        <option value="bg-green-300" style="background-color:#86efac;">Green</option>
+        <option value="bg-pink-400" style="background-color:#f472b6;">Pink</option>
+        <option value="bg-purple-500" style="background-color:#a855f7;">Purple</option>
+        <option value="bg-indigo-400" style="background-color:#818cf8;">Indigo</option>
+        <option value="bg-yellow-400" style="background-color:#facc15;">Yellow</option>
+        <option value="bg-blue-500" style="background-color:#3b82f6;">Blue</option>
+        <option value="bg-orange-400" style="background-color:#fb923c;">Orange</option>
+        <option value="bg-red-500" style="background-color:#ef4444;">Red</option>
+        <option value="bg-lime-400" style="background-color:#a3e635;">Lime</option>
+        <option value="bg-cyan-400" style="background-color:#22d3ee;">Cyan</option>
+        <option value="bg-fuchsia-500" style="background-color:#d946ef;">Fuchsia</option>
+        <option value="bg-violet-600" style="background-color:#7c3aed;">Violet</option>
+        <option value="bg-amber-500" style="background-color:#f59e0b;">Amber</option>
+      </select>
+
+      <button id="zoomIn">Zoom In</button>
+      <button id="zoomOut">Zoom Out</button>
+      <button id="toggleView">Toggle View</button>
+      <button id="exportImage">Save as Image</button>
+    </div>
+
+    <div id="map-wrapper">
+      <div id="map" class="grid-map"></div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
